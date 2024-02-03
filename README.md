@@ -26,7 +26,7 @@ Anda dapat melakukan instalasi O-Present melalui halaman github:
 1. Unduh proyek ini dengan satu klik! Pilih "code" di GitHub, lalu download ZIP.
 2. Aktifkan server Apache dan MySQL di XAMPP untuk memulai.
 3. Buka `localhost\phpmyadmin` pada browser Anda, lalu buat database baru dengan nama o-present
-4. Ekstrak folder Aplikasi O-Present yang sudah diunduh dan lokasikan folder aplikasi dalam folder htdocs.
+4. Ekstrak folder Aplikasi O-Present yang sudah diunduh dan lokasikan folder aplikasi di dalam folder htdocs.
 
 ## Configuration
 
@@ -39,7 +39,7 @@ Setelah melakukan instalasi O-Present, Anda perlu melakukan konfigurasi sebagai 
    `php spark migrate`
 6. Start server dengan perintah:
    `php spark serve`
-7. Secara default, aplikasi dalam diakses melalui port 8080
+7. Secara default, aplikasi dapat diakses melalui port 8080
    `http://localhost:8080`.
 
 ## First Usage
@@ -64,7 +64,7 @@ Email: choland@present.com
 Password: 123456
 ```
 
-Setelah itu, Anda dapat mencoba untuk menambahkan lokasi presensi baru untuk mencoba melakukan presensi masuk dan presensi keluar.
+Setelah berhasil melakukan login, Anda dapat mencoba untuk menambahkan lokasi presensi baru untuk mencoba melakukan presensi masuk dan presensi keluar.
 
 ## Services
 
