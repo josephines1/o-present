@@ -1,5 +1,5 @@
 # O-Present
-[![made-with-codeigniter4](https://img.shields.io/badge/Made%20with-CodeIgniter4-DD4814.svg)](https://www.codeigniter.com/) [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://josephines1.github.io/o-present)
+[![made-with-codeigniter4](https://img.shields.io/badge/Made%20with-CodeIgniter4-DD4814.svg)](https://www.codeigniter.com/) [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%3F/Yes%21/blue?icon=github)](https://github.com/josephines1/o-present)
 
 ## Aplikasi Presensi Online Berbasis Web
 Presensi online tanpa ribet! Catat kehadiran dengan cepat menggunakan foto dan GPS. Manajemen presensi yang lebih pintar dan praktis!
@@ -25,20 +25,22 @@ Temukan fitur-fitur lengkap pada aplikasi presensi O-Present:
 Anda dapat melakukan instalasi O-Present melalui halaman github:
 1. Unduh proyek ini dengan satu klik! Pilih "code" di GitHub, lalu download ZIP.
 2. Aktifkan server Apache dan MySQL di XAMPP untuk memulai.
-3. Ekstrak folder Aplikasi O-Present yang sudah diunduh dan lokasikan folder aplikasi dalam folder htdocs.
-4. Buka Folder Aplikasi O-Present dalam Teks Editor, seperti Visual Studio Code.
-5. Buka Terminal dan start server dengan mengetikkan:
-   `php spark serve`
-6. Secara default, aplikasi dalam diakses melalui port 8080
-   `http://localhost:8080`.
+3. Buka `localhost\phpmyadmin` pada browser Anda, lalu buat database baru dengan nama o-present
+4. Ekstrak folder Aplikasi O-Present yang sudah diunduh dan lokasikan folder aplikasi dalam folder htdocs.
 
 ## Configuration
 
 Setelah melakukan instalasi O-Present, Anda perlu melakukan konfigurasi sebagai berikut.
-1. Edit file app/Config/Email.php dan pastikan fromName dan fromEmail sudah diatur, karena akan digunakan saat mengirim email untuk reset password, dan sebagainya.
-2. Isi nilai SMTPPass dengan kode yang Anda dapatkan dari langkah 2 verifikasi dua langkah pada Akun Google Anda untuk Aplikasi XAMPP.
-3. Pastikan basis data Anda sudah diatur dengan benar, lalu jalankan migrasi Auth dengan perintah:
+1. Buka Folder Aplikasi O-Present dalam Teks Editor, seperti Visual Studio Code.
+2. Edit file app/Config/Email.php dan pastikan fromName dan fromEmail sudah diatur, karena akan digunakan saat mengirim email untuk reset password, dan sebagainya.
+3. Isi nilai SMTPPass dengan kode yang Anda dapatkan dari langkah 2 verifikasi dua langkah pada Akun Google Anda untuk Aplikasi XAMPP.
+4. Pastikan database (o-present) Anda sudah diatur dengan benar
+5. Buka Terminal, dan jalankan migrasi Auth dengan perintah:
    `php spark migrate`
+6. Start server dengan perintah:
+   `php spark serve`
+7. Secara default, aplikasi dalam diakses melalui port 8080
+   `http://localhost:8080`.
 
 ## First Usage
 
