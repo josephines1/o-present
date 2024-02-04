@@ -4,6 +4,8 @@
 ## Aplikasi Presensi Online Berbasis Web
 Presensi online tanpa ribet! Catat kehadiran dengan cepat menggunakan foto dan GPS. Manajemen presensi yang lebih pintar dan praktis!
 
+![O-Present Mockup](/assets/img/readme/mockup_opresent.png "O-Present")
+
 ## Requirements
 
 - CodeIgniter 4.1+ or later
@@ -98,6 +100,10 @@ Untuk pengguna yang lupa password, pengguna dapat memilih opsi "Lupa Password" y
 
 #### Ubah Email
 Untuk pengguna yang ingin melakukan perubahan email, pengguna dapat memilih opsi "Ubah Email" yang tersedia pada halaman profile. Sistem akan mengirimkan token ke alamat email pengguna saat ini, untuk instruksi selanjutnya dalam melakukan perubahan alamat email.
+
+## Database
+Berikut ini adalah struktur table database untuk aplikasi O-Present.
+![O-Present Database](/assets/img/readme/db_opresent.png "O-Present")
 
 ## Tech
 
