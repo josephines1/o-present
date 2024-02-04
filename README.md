@@ -37,11 +37,20 @@ Setelah melakukan instalasi O-Present, Anda perlu melakukan konfigurasi sebagai 
 2. Edit file app/Config/Email.php dan pastikan fromName dan fromEmail sudah diatur, karena akan digunakan saat mengirim email untuk reset password, dan sebagainya.
 3. Isi nilai SMTPPass dengan kode yang Anda dapatkan dari langkah 2 verifikasi dua langkah pada Akun Google Anda untuk Aplikasi XAMPP.
 4. Pastikan database (o-present) Anda sudah diatur dengan benar
-5. Buka Terminal, dan jalankan migrasi Auth dengan perintah:
-   `php spark migrate`
-6. Start server dengan perintah:
+5. Buka Terminal, dan jalankan migrasi database dengan perintah:
+   `php spark migrate -all`
+6. Jalankan seeder database dengan perintah:
+   `php spark db:seed JabatanSeeder`
+   `php spark db:seed LokasiSeeder`
+   `php spark db:seed PegawaiSeeder`
+   `php spark db:seed UsersSeeder`
+   `php spark db:seed AuthGroupsSeeder`
+   `php spark db:seed AuthPermissionsSeeder`
+   `php spark db:seed AuthGroupsPermissionsSeeder`
+   `php spark db:seed AuthGroupsUsersSeeder`
+7. Start server dengan perintah:
    `php spark serve`
-7. Secara default, aplikasi dapat diakses melalui port 8080
+8. Secara default, aplikasi dapat diakses melalui port 8080
    `http://localhost:8080`.
 
 ## First Usage
