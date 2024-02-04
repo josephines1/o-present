@@ -40,14 +40,16 @@ Setelah melakukan instalasi O-Present, Anda perlu melakukan konfigurasi sebagai 
 5. Buka Terminal, dan jalankan migrasi database dengan perintah:
    `php spark migrate -all`
 6. Jalankan seeder database dengan perintah:
-   -- `php spark db:seed JabatanSeeder`
-   -- `php spark db:seed LokasiSeeder`
-   -- `php spark db:seed PegawaiSeeder`
-   -- `php spark db:seed UsersSeeder`
-   -- `php spark db:seed AuthGroupsSeeder`
-   -- `php spark db:seed AuthPermissionsSeeder`
-   -- `php spark db:seed AuthGroupsPermissionsSeeder`
-   -- `php spark db:seed AuthGroupsUsersSeeder`
+   ```
+   php spark db:seed JabatanSeeder
+   php spark db:seed LokasiSeeder
+   php spark db:seed PegawaiSeeder
+   php spark db:seed UsersSeeder
+   php spark db:seed AuthGroupsSeeder
+   php spark db:seed AuthPermissionsSeeder
+   php spark db:seed AuthGroupsPermissionsSeeder
+   php spark db:seed AuthGroupsUsersSeeder
+   ```
 7. Start server dengan perintah:
    `php spark serve`
 8. Secara default, aplikasi dapat diakses melalui port 8080
