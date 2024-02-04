@@ -4,7 +4,7 @@
 ## Aplikasi Presensi Online Berbasis Web
 Presensi online tanpa ribet! Catat kehadiran dengan cepat menggunakan foto dan GPS. Manajemen presensi yang lebih pintar dan praktis!
 
-![O-Present Mockup](/assets/img/readme/mockup_opresent.png "O-Present")
+![O-Present Mockup](https://github.com/josephines1/o-present/blob/main/public/assets/img/readme/mockup_opresent.png "O-Present")
 
 ## Requirements
 
@@ -103,7 +103,7 @@ Untuk pengguna yang ingin melakukan perubahan email, pengguna dapat memilih opsi
 
 ## Database
 Berikut ini adalah struktur table database untuk aplikasi O-Present.
-![O-Present Database](/assets/img/readme/db_opresent.png "O-Present")
+![O-Present Database](https://github.com/josephines1/o-present/blob/main/public/assets/img/readme/db_opresent.png "O-Present")
 
 ## Tech
 
