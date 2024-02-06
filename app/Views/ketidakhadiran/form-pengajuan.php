@@ -5,6 +5,7 @@
 <div class="page-body">
     <div class="container-xl">
         <form action="<?= base_url('pengajuan-ketidakhadiran/store') ?>" method="post" enctype="multipart/form-data">
+            <?= csrf_field() ?>
             <div class="row row-deck row-cards align-items-stretch">
                 <div class="col-lg-6 col-sm-12">
                     <div class="card">

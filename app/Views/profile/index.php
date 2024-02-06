@@ -185,6 +185,7 @@
                         </div>
                         <div class="col">
                             <form action="<?= base_url('/send-password-token') ?>" method="post" class="d-inline w-100">
+                                <?= csrf_field() ?>
                                 <input type="hidden" name="email" value="<?= $user_profile->email ?>">
                                 <button type="submit" class="btn btn-outline-danger w-100">
                                     Reset Password
@@ -223,6 +224,7 @@
                         </div>
                         <div class="col">
                             <form action="<?= base_url('/send-email-token') ?>" method="post" class="d-inline w-100">
+                                <?= csrf_field() ?>
                                 <input type="hidden" name="email" value="<?= $user_profile->email ?>">
                                 <button type="submit" class="btn btn-outline-danger w-100">
                                     Ubah Email

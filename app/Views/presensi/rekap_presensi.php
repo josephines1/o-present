@@ -147,6 +147,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= base_url('/rekap-presensi/excel') ?>" method="POST">
+                <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="tanggal_awal">Tanggal Awal</label>

@@ -5,6 +5,7 @@
 <div class="page-body">
     <div class="container-xl">
         <form action="<?= base_url('kelola-ketidakhadiran/store') ?>" method="post">
+            <?= csrf_field() ?>
             <input type="hidden" name="id" value="<?= $data_ketidakhadiran->id ?>">
             <div class="row row-deck row-cards align-items-stretch">
                 <div class="col-md-6">

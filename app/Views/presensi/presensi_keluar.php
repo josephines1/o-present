@@ -19,6 +19,7 @@
                         <div class="mt-3" id="my_camera"></div>
                         <div class="mt-3"><?= date('d F Y', strtotime($tanggal_keluar)) . ' - ' . $jam_keluar ?></div>
                         <form action="<?= base_url('/presensi-keluar/simpan') ?>" method="post">
+                            <?= csrf_field() ?>
                             <input type="hidden" name="username" value="<?= $user_profile->username ?>">
                             <input type="hidden" name="id_presensi" value="<?= $data_presensi_masuk->id ?>">
                             <input type="hidden" name="tanggal_keluar" value="<?= $tanggal_keluar ?>">

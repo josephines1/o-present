@@ -70,6 +70,7 @@ if ($user_lokasi_presensi->zona_waktu === 'WIB') {
                                 <div id="detik_masuk"></div>
                             </div>
                             <form action="<?= base_url('/presensi-masuk') ?>" method="post">
+                                <?= csrf_field() ?>
                                 <input type="hidden" name="latitude_kantor" value="<?= $user_lokasi_presensi->latitude ?>">
                                 <input type="hidden" name="longitude_kantor" value="<?= $user_lokasi_presensi->longitude ?>">
                                 <input type="hidden" name="radius" value="<?= $user_lokasi_presensi->radius ?>">
@@ -162,6 +163,7 @@ if ($user_lokasi_presensi->zona_waktu === 'WIB') {
                                 <div id="detik_keluar"></div>
                             </div>
                             <form action="<?= base_url('/presensi-keluar') ?>" method="post">
+                                <?= csrf_field() ?>
                                 <input type="hidden" name="latitude_kantor" value="<?= $user_lokasi_presensi->latitude ?>">
                                 <input type="hidden" name="longitude_kantor" value="<?= $user_lokasi_presensi->longitude ?>">
                                 <input type="hidden" name="radius" value="<?= $user_lokasi_presensi->radius ?>">

@@ -12,6 +12,7 @@
                     </div>
                     <div class="d-flex">
                         <form class="w-100" action="<?= base_url('/profile/hapus-foto') ?>" method="post">
+                            <?= csrf_field() ?>
                             <input type="hidden" name="foto_db" value="<?= $user_profile->foto ?>">
                             <button class="card-btn w-100 border-0 bg-transparent" name="hapus-foto" type="submit" autocomplete="off">Hapus Foto</button>
                         </form>
@@ -21,6 +22,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <form action="<?= base_url('profile/update') ?>" method="post" enctype="multipart/form-data">
+                        <?= csrf_field() ?>
                         <input type="hidden" name="id" value="<?= $user_profile->id_pegawai ?>">
                         <input type="hidden" name="foto_lama" value="<?= $user_profile->foto ?>">
                         <div class="card-body">
