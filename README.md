@@ -22,38 +22,158 @@ Temukan fitur-fitur lengkap pada aplikasi presensi O-Present:
 - Simpan Data Presensi, Lokasi Presensi, hingga Data Pegawai
 - Sistem Otentikasi (Auth) Multiuser untuk Pegawai, Admin, dan Head
 
-## Installation
+## Getting Started
 
-Anda dapat melakukan instalasi O-Present melalui halaman github:
-1. Unduh proyek ini dengan satu klik! Pilih "code" di GitHub, lalu download ZIP.
-2. Aktifkan server Apache dan MySQL di XAMPP untuk memulai.
-3. Buka `localhost\phpmyadmin` pada browser Anda, lalu buat database baru dengan nama o-present
-4. Ekstrak folder Aplikasi O-Present yang sudah diunduh dan lokasikan folder aplikasi di dalam folder htdocs.
-
-## Configuration
-
-Setelah melakukan instalasi O-Present, Anda perlu melakukan konfigurasi sebagai berikut.
-1. Buka Folder Aplikasi O-Present dalam Teks Editor, seperti Visual Studio Code.
-2. Edit file app/Config/Email.php dan pastikan fromName dan fromEmail sudah diatur, karena akan digunakan saat mengirim email untuk reset password, dan sebagainya.
-3. Isi nilai SMTPPass dengan kode yang Anda dapatkan dari langkah 2 verifikasi dua langkah pada Akun Google Anda untuk Aplikasi XAMPP.
-4. Pastikan database (o-present) Anda sudah diatur dengan benar
-5. Buka Terminal, dan jalankan migrasi database dengan perintah:
-   `php spark migrate -all`
-6. Jalankan seeder database dengan perintah:
+Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan web O-Present:
+1. Anda dapat mengunduh kode sumber aplikasi ini dari repositori GitHub dengan tombol "Download ZIP" atau jalankan perintah berikut di terminal Anda:
+   ```console
+   git clone https://github.com/josephines1/o-present.git
    ```
-   php spark db:seed JabatanSeeder
-   php spark db:seed LokasiSeeder
-   php spark db:seed PegawaiSeeder
-   php spark db:seed UsersSeeder
-   php spark db:seed AuthGroupsSeeder
-   php spark db:seed AuthPermissionsSeeder
-   php spark db:seed AuthGroupsPermissionsSeeder
-   php spark db:seed AuthGroupsUsersSeeder
+
+2. Ekstrak file Zip O-Present yang sudah diunduh dan lokasikan folder aplikasi di dalam folder htdocs.
+
+3. Buka folder project tersebut di Code Editor (seperti Visual Studio Code)
+
+4. Buka terminal, dan pastikan path pada terminal sudah terarah pada directory project website.
+   
+5. Jalankan perintah berikut ini pada terminal untuk memuat package yang dibutuhkan website.
+   ```console
+   composer install
    ```
-7. Start server dengan perintah:
-   `php spark serve`
-8. Secara default, aplikasi dapat diakses melalui port 8080
-   `http://localhost:8080`.
+   
+6. Copy file `env` dan beri nama file duplikatnya menjadi `.env`
+   - Pertama, ubah konfigurasi CI_ENVIROMENT menjadi seperti di bawah ini.
+     ```
+      CI_ENVIRONMENT = development
+      ```
+     
+   - Lalu, konfigurasikan url utama untuk web Anda.
+     ```
+      app.baseURL = 'http://localhost:8080/'
+      ```
+     
+   - Kemudian, konfirgurasikan database. Sesuaikan dengan database milik Anda.
+     ```
+      database.default.hostname = localhost
+      database.default.database = o-present
+      database.default.username = root
+      database.default.password = 
+      database.default.DBDriver = MySQLi
+      database.default.DBPrefix =
+      database.default.port = 3306
+      ```
+     
+7. Buka file `RoleFilter.php` dalam folder `vendor\myth\auth\src\Filters\RoleFilter.php`.
+   
+8. Modifikasi function before menjadi seperti berikut ini.
+   ```
+   public function before(RequestInterface $request, $arguments = null)
+    {
+        // If no user is logged in then send them to the login form.
+        if (! $this->authenticate->check()) {
+            session()->set('redirect_url', current_url());
+
+            return redirect($this->reservedRoutes['login']);
+        }
+
+        if (empty($arguments)) {
+            return;
+        }
+
+        // Check each requested permission
+        foreach ($arguments as $group) {
+            if ($this->authorize->inGroup($group, $this->authenticate->id())) {
+                return;
+            }
+        }
+
+        // Check if the user has the 'head' role
+        if ($this->authorize->inGroup('head', $this->authenticate->id())) {
+            // Check each requested permission for 'head'
+            if (!empty($arguments)) {
+                foreach ($arguments as $group) {
+                    if ($this->authorize->inGroup($group, $this->authenticate->id())) {
+                        return;
+                    }
+                }
+
+                // If 'head' does not have the required permission, redirect to '/admin'
+                return redirect()->to('/admin')->with('error', lang('Auth.notEnoughPrivilege'));
+            }
+        }
+
+        if ($this->authenticate->silent()) {
+            $redirectURL = session('redirect_url') ?? route_to($this->landingRoute);
+            unset($_SESSION['redirect_url']);
+
+            return redirect()->to($redirectURL)->with('error', lang('Auth.notEnoughPrivilege'));
+        }
+
+        // throw new PermissionException(lang('Auth.notEnoughPrivilege'));
+        return redirect()->to('/');
+    }
+   ```
+
+9. Buka file `Auth.php` dalam folder `vendor\myth\auth\src\Config\Auth.php`.
+    - Konfigurasikan defaultUserGroup.
+      ```
+      public $defaultUserGroup = ['pegawai'];
+      ```
+      
+    - Konfigurasikan tampilan auth website.
+      ```
+      public $views = [
+        'login'           => 'Auth\login',
+        'register'        => 'Myth\Auth\Views\register',
+        'forgot'          => 'Auth\forgot',
+        'reset'           => 'Auth\reset-password',
+        'emailForgot'     => 'Myth\Auth\Views\emails\forgot',
+        'emailActivation' => 'Myth\Auth\Views\emails\activation',
+      ];
+      ```
+      
+10. Buka file `Email.php` dalam folder `app/Config/Email.php`.
+    
+11. Isi fromName dan fromEmail untuk digunakan saat mengirim email untuk reset password, dan sebagainya.
+    ```
+    public string $fromEmail  = 'your email here';
+    public string $fromName   = 'O-Present';
+    ```
+    
+12. Isi nilai SMTPPass dengan kode yang Anda dapatkan dari langkah 2 verifikasi dua langkah pada Akun Google Anda untuk Aplikasi XAMPP.
+    ```
+    public string $SMTPPass = 'your code here';
+    ``` 
+    
+13. Aktifkan server Apache dan MySQL di XAMPP Control Panel Anda untuk memulai server pengembangan lokal.
+    
+14. Kunjungi `localhost/phpmyadmin` pada browser Anda, lalu buat database baru dengan nama o-present atau sesuaikan dengan nama database yang Anda inginkan
+
+15. Kembali ke terminal, jalankan perintah migrate dan seed
+    - Migrate
+      ```console
+      php spark migrate -2024-02-02-091537_create_opresent_tables
+      php spark migrate -2024-02-02-142048_create_auth_tables.php
+      ```
+
+    - Seed
+      ```console
+      php spark db:seed JabatanSeeder
+      php spark db:seed LokasiSeeder
+      php spark db:seed PegawaiSeeder
+      php spark db:seed UsersSeeder
+      php spark db:seed AuthGroupsSeeder
+      php spark db:seed AuthPermissionsSeeder
+      php spark db:seed AuthGroupsPermissionsSeeder
+      php spark db:seed AuthGroupsUsersSeeder
+      ```
+
+16. Selanjutnya, start server dengan menjalankan perintah berikut ini di terminal.
+    ```console
+    php spark serve
+    ```
+      
+18. Selesai! Anda dapat mengakses web melalui port 8080 `http://localhost:8080` di server lokal.
 
 ## First Usage
 
