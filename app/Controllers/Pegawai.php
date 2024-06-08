@@ -261,6 +261,7 @@ class Pegawai extends BaseController
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
+        exit();
     }
 
     public function detail($username): string

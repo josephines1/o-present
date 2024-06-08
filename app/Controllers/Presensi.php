@@ -396,6 +396,7 @@ class Presensi extends BaseController
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
+        exit();
     }
 
     public function laporanHarian()
@@ -588,6 +589,7 @@ class Presensi extends BaseController
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
+        exit();
     }
 
     public function laporanBulanan()
@@ -783,5 +785,6 @@ class Presensi extends BaseController
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
+        exit();
     }
 }
