@@ -164,7 +164,7 @@ Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan 
      }
      ```
 
-   - Modifikasi function `attemptForgot` menjadi seperti berikut ini.
+   - Modifikasi function `resendActivateAccount` menjadi seperti berikut ini.
      ```
      public function resendActivateAccount($login = false)
      {
