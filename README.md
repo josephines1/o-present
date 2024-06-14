@@ -114,7 +114,98 @@ Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan 
     }
    ```
 
-9. Buka file `Auth.php` dalam folder `vendor\myth\auth\src\Config\Auth.php`.
+9. Buka file `AuthController.php` dalam folder `vendor\myth\auth\src\Controllers\AuthController.php`.
+   - Modifikasi function `attemptForgot` menjadi seperti berikut ini.
+     ```
+     public function attemptForgot($email = false)
+     {
+        if ($this->config->activeResetter === null) {
+            return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+        }
+
+        if (!$email) {
+            $rules = [
+                'email' => [
+                    'label' => lang('Auth.emailAddress'),
+                    'rules' => 'required|valid_email',
+                ],
+            ];
+
+            if (!$this->validate($rules)) {
+                dd($this->validator->getErrors());
+                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            }
+        }
+
+        $users = model(UserModel::class);
+
+        if ($email) {
+            $user = $users->where('email', $email)->first();
+        } else {
+            $user = $users->where('email', $this->request->getPost('email'))->first();
+        }
+
+        if (null === $user) {
+            return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
+        }
+
+        // Save the reset hash /
+        $user->generateResetHash();
+        $users->save($user);
+
+        $resetter = service('resetter');
+        $sent     = $resetter->send($user);
+
+        if (!$sent) {
+            return redirect()->back()->withInput()->with('error', $resetter->error() ?? lang('Auth.unknownError'));
+        }
+
+        return redirect()->route('reset-password')->with('message', lang('Auth.forgotEmailSent'));
+     }
+     ```
+
+   - Modifikasi function `resendActivateAccount` menjadi seperti berikut ini.
+     ```
+     public function resendActivateAccount($login = false)
+     {
+        if ($this->config->requireActivation === null) {
+            return redirect()->route('login');
+        }
+
+        $throttler = service('throttler');
+
+        if ($login == false) {
+            if ($throttler->check(md5($this->request->getIPAddress()), 2, MINUTE) === false) {
+                return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
+            }
+            $login = urldecode($this->request->getGet('login'));
+        }
+        $type  = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $users = model(UserModel::class);
+
+        $user = $users->where($type, $login)
+            ->where('active', 0)
+            ->first();
+
+        if (null === $user) {
+            return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
+        }
+
+        $activator = service('activator');
+        $sent      = $activator->send($user);
+
+        if (!$sent) {
+            return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
+        }
+
+        // Success!
+        // return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
+        return redirect()->to('/data-pegawai')->with('berhasil', 'Email aktivasi berhasil terkirim');
+     }
+     ```
+     
+10. Buka file `Auth.php` dalam folder `vendor\myth\auth\src\Config\Auth.php`.
     - Konfigurasikan defaultUserGroup.
       ```
       public $defaultUserGroup = ['pegawai'];
@@ -132,24 +223,24 @@ Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan 
       ];
       ```
       
-10. Buka file `Email.php` dalam folder `app/Config/Email.php`.
+11. Buka file `Email.php` dalam folder `app/Config/Email.php`.
     
-11. Isi fromName dan fromEmail untuk digunakan saat mengirim email untuk reset password, dan sebagainya.
+12. Isi fromName dan fromEmail untuk digunakan saat mengirim email untuk reset password, dan sebagainya.
     ```
     public string $fromEmail  = 'your email here';
     public string $fromName   = 'O-Present';
     ```
     
-12. Isi nilai SMTPPass dengan kode yang Anda dapatkan dari langkah 2 verifikasi dua langkah pada Akun Google Anda untuk Aplikasi XAMPP.
+13. Isi nilai SMTPPass dengan kode yang Anda dapatkan dari langkah 2 verifikasi dua langkah pada Akun Google Anda untuk Aplikasi XAMPP.
     ```
     public string $SMTPPass = 'your code here';
     ``` 
     
-13. Aktifkan server Apache dan MySQL di XAMPP Control Panel Anda untuk memulai server pengembangan lokal.
+14. Aktifkan server Apache dan MySQL di XAMPP Control Panel Anda untuk memulai server pengembangan lokal.
     
-14. Kunjungi `localhost/phpmyadmin` pada browser Anda, lalu buat database baru dengan nama o-present atau sesuaikan dengan nama database yang Anda inginkan
+15. Kunjungi `localhost/phpmyadmin` pada browser Anda, lalu buat database baru dengan nama o-present atau sesuaikan dengan nama database yang Anda inginkan
 
-15. Kembali ke terminal, jalankan perintah migrate dan seed
+16. Kembali ke terminal, jalankan perintah migrate dan seed
     - Migrate
       ```console
       php spark migrate -2024-02-02-091537_create_opresent_tables
@@ -173,7 +264,7 @@ Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan 
     php spark serve
     ```
       
-18. Selesai! Anda dapat mengakses web melalui port 8080 `http://localhost:8080` di server lokal.
+17. Selesai! Anda dapat mengakses web melalui port 8080 `http://localhost:8080` di server lokal.
 
 ## First Usage
 
