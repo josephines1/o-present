@@ -6,6 +6,12 @@ Presensi online tanpa ribet! Catat kehadiran dengan cepat menggunakan foto dan G
 
 ![O-Present Mockup](https://github.com/josephines1/o-present/blob/main/public/assets/img/readme/mockup_opresent.png "O-Present")
 
+## Disclaimer
+
+Proyek ini tersedia secara gratis untuk penggunaan pribadi. Namun, jika Anda ingin menggunakannya untuk keperluan komersial, saya sangat menghargai donasi sebagai bentuk dukungan untuk kelanjutan dan pengembangan proyek ini.
+
+Untuk informasi mengenai donasi atau pertanyaan lainnya, Anda dapat menghubungi saya melalui LinkedIn: [Josephine](https://www.linkedin.com/in/josephine-santoso-b063a4300/).
+
 ## Requirements
 
 - CodeIgniter 4.1+ or later
