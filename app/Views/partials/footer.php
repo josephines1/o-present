@@ -10,7 +10,7 @@
                 <ul class="list-inline list-inline-dots mb-0">
                     <li class="list-inline-item">
                         Copyright &copy; <?= date('Y') ?>
-                        <a href="https://josephines1.github.io/" class="link-secondary">Josephine</a>.
+                        <a href="https://github.com/josephines1/o-present?tab=readme-ov-file#o-present" class="link-secondary">Josephine</a>.
                     </li>
                 </ul>
             </div>

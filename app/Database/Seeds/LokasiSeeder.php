@@ -13,7 +13,7 @@ class LokasiSeeder extends Seeder
                 'nama_lokasi'       => 'Gedung Jaya Raya',
                 'slug'              => 'gedung-jaya-raya',
                 'alamat_lokasi'     => 'RT.5/RW.2, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110',
-                'tipe_lokasi'       => 'Main Office',
+                'tipe_lokasi'       => 'Pusat',
                 'latitude'          => '-6.195590234157995',
                 'longitude'         => '106.81301455947505',
                 'radius'            => 500,

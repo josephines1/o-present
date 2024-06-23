@@ -6,7 +6,7 @@
     <div class="container-xl">
         <div class="card mb-3">
             <div class="card-body">
-                <div class="row justify-content-between g-3 flex-column-reverse flex-lg-row align-items-end">
+                <div class="row justify-content-between g-3 flex-column-reverse flex-lg-row align-items-lg-end">
                     <div class="col-md-6">
                         <form method="get">
                             <div class="row g-2 align-items-end">
