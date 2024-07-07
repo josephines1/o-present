@@ -1,10 +1,10 @@
+![O-Present](https://github.com/josephines1/o-present/blob/main/public/assets/img/readme/mockup_opresent.png "O-Present")
+
 # O-Present
 [![made-with-codeigniter4](https://img.shields.io/badge/Made%20with-CodeIgniter4-DD4814.svg)](https://www.codeigniter.com/) [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%3F/Yes%21/blue?icon=github)](https://github.com/josephines1/o-present)
 
 ## Aplikasi Presensi Online Berbasis Web
 Presensi online tanpa ribet! Catat kehadiran dengan cepat menggunakan foto dan GPS. Manajemen presensi yang lebih pintar dan praktis!
-
-![O-Present Mockup](https://github.com/josephines1/o-present/blob/main/public/assets/img/readme/mockup_opresent.png "O-Present")
 
 ## Requirements
 
