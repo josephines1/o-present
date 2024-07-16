@@ -340,9 +340,10 @@ Teknologi dalam aplikasi ini:
 
 Kontribusi untuk penyempurnaan aplikasi ini sangat dihargai. Jika Anda menemukan masalah atau bug, silahkan membuat issue baru dalam repositori ini.
 
-## Donation
+## Support
 
-[![Donate paypal](https://img.shields.io/badge/Donate-PayPal-green.svg?style=for-the-badge)](https://paypal.me/josephines24)
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/josephines24)
+[![KaryaKarsa](https://image.typedream.com/cdn-cgi/image/width=120,format=auto,fit=scale-down,quality=100/https://api.typedream.com/v0/document/public/07480db4-7b4e-4309-9be2-b4e218db150e/2IGRM5CUZESdabtjezsFTWnWFVR_karyakarsa-logo-white.png?bucket=document)](https://karyakarsa.com/josephines24)
 
 ## Credits
 
