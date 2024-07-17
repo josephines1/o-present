@@ -17,7 +17,7 @@ Presensi online tanpa ribet! Catat kehadiran dengan cepat menggunakan foto dan G
 Temukan fitur-fitur lengkap pada aplikasi presensi O-Present:
 - Presensi Berdasarkan GPS Pegawai
 - Presensi Berdasarkan Foto Selfie
-- Import Laporan Presensi ke dalam Bentuk Excel
+- Import Laporan Presensi ke dalam Bentuk Microsoft Excel
 - Temukan Data dengan Filter dan Live Search
 - Simpan Data Presensi, Lokasi Presensi, hingga Data Pegawai
 - Sistem Otentikasi (Auth) Multiuser untuk Pegawai, Admin, dan Head
@@ -307,7 +307,7 @@ Pada role Head dan Admin, pengguna dapat melihat laporan presensi harian dan bul
 Pada role Admin dan Pegawai, pengguna dapat mengajukan ketidakhadiran dengan batas H-3 dan durasi ketidakhadiran selama 3 bulan. Pengguna diwajibkan menggunggah file surat keterangan tidak hadir dalam bentuk PDF. File yang sudah terunggah disimpan dalam folder public\assets\file\surat_keterangan_ketidakhadiran. Pengguna dapat mengunduh daftar ketidakhadirannya dalam satu bulan ke dalam bentuk Microsoft Excel.
 
 #### Kelola Ketidakhadiran
-Pada role Head, pengguna dapat mengelola ijin ketidakhadiran, yang meliputi PENDING, APPROVED, dan REJECTED. Pengguna dapat mengunduh daftar ketidakhadiran dari seluruh pegawai ke dalam bentuk Micorosoft Excel.
+Pada role Head, pengguna dapat mengelola ijin ketidakhadiran, yang meliputi PENDING, APPROVED, dan REJECTED. Pengguna dapat mengunduh daftar ketidakhadiran dari seluruh pegawai ke dalam bentuk Microsoft Excel.
 
 #### Master Data
 Pada role Head dan Admin, pengguna dapat mengelola data jabatan, lokasi presensi, dan pegawai. Pengguna dapat menemukan data-data tersebut dengan memanfaatkan fitur filter data dan live search data sehingga data dapat ditemukan dengan cepat dan efisien. Pengguna juga dapat mengunduh data-data tersebut ke dalam bentuk Microsoft Excel.
