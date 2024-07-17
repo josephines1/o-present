@@ -1,10 +1,10 @@
+![O-Present](https://github.com/josephines1/o-present/blob/main/public/assets/img/readme/mockup_opresent.png "O-Present")
+
 # O-Present
 [![made-with-codeigniter4](https://img.shields.io/badge/Made%20with-CodeIgniter4-DD4814.svg)](https://www.codeigniter.com/) [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%3F/Yes%21/blue?icon=github)](https://github.com/josephines1/o-present)
 
 ## Aplikasi Presensi Online Berbasis Web
 Presensi online tanpa ribet! Catat kehadiran dengan cepat menggunakan foto dan GPS. Manajemen presensi yang lebih pintar dan praktis!
-
-![O-Present Mockup](https://github.com/josephines1/o-present/blob/main/public/assets/img/readme/mockup_opresent.png "O-Present")
 
 ## Requirements
 
@@ -17,7 +17,7 @@ Presensi online tanpa ribet! Catat kehadiran dengan cepat menggunakan foto dan G
 Temukan fitur-fitur lengkap pada aplikasi presensi O-Present:
 - Presensi Berdasarkan GPS Pegawai
 - Presensi Berdasarkan Foto Selfie
-- Import Laporan Presensi ke dalam Bentuk Excel
+- Import Laporan Presensi ke dalam Bentuk Microsoft Excel
 - Temukan Data dengan Filter dan Live Search
 - Simpan Data Presensi, Lokasi Presensi, hingga Data Pegawai
 - Sistem Otentikasi (Auth) Multiuser untuk Pegawai, Admin, dan Head
@@ -307,7 +307,7 @@ Pada role Head dan Admin, pengguna dapat melihat laporan presensi harian dan bul
 Pada role Admin dan Pegawai, pengguna dapat mengajukan ketidakhadiran dengan batas H-3 dan durasi ketidakhadiran selama 3 bulan. Pengguna diwajibkan menggunggah file surat keterangan tidak hadir dalam bentuk PDF. File yang sudah terunggah disimpan dalam folder public\assets\file\surat_keterangan_ketidakhadiran. Pengguna dapat mengunduh daftar ketidakhadirannya dalam satu bulan ke dalam bentuk Microsoft Excel.
 
 #### Kelola Ketidakhadiran
-Pada role Head, pengguna dapat mengelola ijin ketidakhadiran, yang meliputi PENDING, APPROVED, dan REJECTED. Pengguna dapat mengunduh daftar ketidakhadiran dari seluruh pegawai ke dalam bentuk Micorosoft Excel.
+Pada role Head, pengguna dapat mengelola ijin ketidakhadiran, yang meliputi PENDING, APPROVED, dan REJECTED. Pengguna dapat mengunduh daftar ketidakhadiran dari seluruh pegawai ke dalam bentuk Microsoft Excel.
 
 #### Master Data
 Pada role Head dan Admin, pengguna dapat mengelola data jabatan, lokasi presensi, dan pegawai. Pengguna dapat menemukan data-data tersebut dengan memanfaatkan fitur filter data dan live search data sehingga data dapat ditemukan dengan cepat dan efisien. Pengguna juga dapat mengunduh data-data tersebut ke dalam bentuk Microsoft Excel.
@@ -340,9 +340,10 @@ Teknologi dalam aplikasi ini:
 
 Kontribusi untuk penyempurnaan aplikasi ini sangat dihargai. Jika Anda menemukan masalah atau bug, silahkan membuat issue baru dalam repositori ini.
 
-## Donation
+## Support
 
-[![Donate paypal](https://img.shields.io/badge/Donate-PayPal-green.svg?style=for-the-badge)](https://paypal.me/josephines24)
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/josephines24)
+[![KaryaKarsa](https://image.typedream.com/cdn-cgi/image/width=120,format=auto,fit=scale-down,quality=100/https://api.typedream.com/v0/document/public/07480db4-7b4e-4309-9be2-b4e218db150e/2IGRM5CUZESdabtjezsFTWnWFVR_karyakarsa-logo-white.png?bucket=document)](https://karyakarsa.com/josephines24)
 
 ## Credits
 
