@@ -266,7 +266,14 @@ if ($user_lokasi_presensi->zona_waktu === 'WIB') {
 
     function getLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
+            navigator.geolocation.getCurrentPosition(showPosition,
+                function(error) {
+                    alert("Error code: " + error.code + " :" + error.message);
+                }, {
+                    timeout: 30000,
+                    maximumAge: 0,
+                }
+            );
         } else {
             alert('Browser Anda tidak mendukung');
         }
