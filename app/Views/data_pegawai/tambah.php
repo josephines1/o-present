@@ -1,6 +1,17 @@
 <?= $this->extend('templates/index') ?>
 
 <?= $this->section('pageBody') ?>
+<style>
+    .icon-tabler-info-circle {
+        transition: transform 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .icon-tabler-info-circle:hover {
+        transform: translateY(-3px);
+    }
+</style>
+
 <!-- Page body -->
 <div class="page-body">
     <div class="container-xl">
@@ -129,6 +140,27 @@
                                     </div>
                                 <?php endif; ?>
                             </div>
+                            <div class="mb-3 w-100">
+                                <label class="form-label d-flex align-items-center">
+                                    Aktivasi
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-info-circle ms-2" data-bs-toggle="modal" data-bs-target="#caraAktivasiModal">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                </label>
+                                <select name="aktivasi" id="aktivasi" type="text" class="form-select <?= validation_show_error('aktivasi') ? 'is-invalid' : '' ?>">
+                                    <option value="1" <?= old('aktivasi') === "1" ? 'selected' : '' ?>>Aktivasi Nanti</option>
+                                    <option value="2" <?= old('aktivasi') === "2" ? 'selected' : '' ?>>Aktivasi Instan</option>
+                                    <option value="3" <?= old('aktivasi') === "3" ? 'selected' : '' ?>>Aktivasi Melalui Email</option>
+                                </select>
+                                <?php if (validation_show_error('aktivasi')) : ?>
+                                    <div class="invalid-feedback">
+                                        <?= validation_show_error('aktivasi') ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <div class="card-footer text-end">
                             <div class="d-flex">
@@ -142,4 +174,28 @@
         </form>
     </div>
 </div>
+
+<!-- Cara Aktivasi Modal -->
+<div class="modal" id="caraAktivasiModal" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cara Aktivasi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: larger;" class="mb-1 text-primary"><strong>Aktivasi Nanti</strong></p>
+                <p class="lh-lg mb-4">Aktivasi akun dapat dilakukan di kemudian hari. Admin mengirimkan email aktivasi saat akun siap untuk diaktifkan.</p>
+                <p style="font-size: larger;" class="mb-1 text-primary"><strong>Aktivasi Instan</strong></p>
+                <p class="lh-lg mb-4">Akun akan segera diaktifkan tanpa perlu konfirmasi email.</p>
+                <p style="font-size: larger;" class="mb-1 text-primary"><strong>Aktivasi Melalui Email</strong></p>
+                <p class="lh-lg mb-4">Email aktivasi akan langsung dikirimkan ke alamat email yang diberikan setelah Akun berhasil dibuat.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn ms-auto" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?= $this->endSection() ?>

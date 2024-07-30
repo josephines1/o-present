@@ -2,13 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Models\JabatanModel;
-use App\Models\LokasiPresensiModel;
-use App\Models\PegawaiModel;
 use App\Models\RoleModel;
 use App\Models\UsersModel;
+use App\Models\JabatanModel;
+use App\Models\PegawaiModel;
 use App\Models\UsersRoleModel;
+use App\Models\LokasiPresensiModel;
 use Myth\Auth\Models\PermissionModel;
+use Myth\Auth\Controllers\AuthController;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -22,6 +23,7 @@ class Pegawai extends BaseController
     protected $usersRoleModel;
     protected $permissionModel;
     protected $foto_default;
+    protected $auth;
 
     public function __construct()
     {
@@ -33,6 +35,7 @@ class Pegawai extends BaseController
         $this->usersRoleModel = new UsersRoleModel();
         $this->permissionModel = new PermissionModel();
         $this->foto_default = 'default.jpg';
+        $this->auth = new AuthController();
     }
 
     public function index(): string
@@ -380,10 +383,23 @@ class Pegawai extends BaseController
         $password_default = '123456';
         $password_default_hash = $this->usersModel->hashPassword($password_default);
 
-        $active_default = 0; // tidak aktif
-        $activate_hash = bin2hex(random_bytes(16));
-
-        // dd((int)$this->request->getVar('jabatan'));
+        /*
+        * Mengambil cara aktivasi yang dipilih
+        */
+        $caraAktivasi = $this->request->getPost('aktivasi');
+        if ($caraAktivasi != 2) {
+            /*
+            * Jika aktivasi manual, active 0 dan buatkan activate_hash
+            */
+            $active = 0;
+            $activate_hash = bin2hex(random_bytes(16));
+        } else {
+            /*
+            * Jika aktivasi otomatis, active 1 dan tidak perlu buatkan activate_hash
+            */
+            $active = 1;
+            $activate_hash = null;
+        }
 
         $this->pegawaiModel->save([
             'nip' => $this->request->getVar('nip_baru'),
@@ -407,7 +423,7 @@ class Pegawai extends BaseController
             'email' => $email,
             'username' => $username,
             'password_hash' => $password_default_hash,
-            'active' => $active_default,
+            'active' => $active,
             'activate_hash' => $activate_hash,
         ]);
 
@@ -418,6 +434,9 @@ class Pegawai extends BaseController
             'group_id' => $this->request->getVar('role'),
             'user_id' => $user_id,
         ]);
+
+        // Jika memilih cara aktivasi Melalui Email, kirim langsung Activation Email
+        $this->auth->resendActivateAccount($this->request->getPost('email'));
 
         session()->setFlashdata('berhasil', 'Data pegawai berhasil ditambahkan');
         return redirect()->to('/data-pegawai');
