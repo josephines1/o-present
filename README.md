@@ -66,7 +66,7 @@ Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan 
       database.default.DBPrefix =
       database.default.port = 3306
       ```
-     
+
 7. Buka file `RoleFilter.php` dalam folder `vendor\myth\auth\src\Filters\RoleFilter.php`.
    
 8. Modifikasi function before menjadi seperti berikut ini.
