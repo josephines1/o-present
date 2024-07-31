@@ -6,16 +6,24 @@ use DateTime;
 
 class myCustomValidation
 {
-    public function plusThreeDates($value): bool
+    public function daysAfter($value, string $params): bool
     {
+        // Validate the input value as a date
+        if (!strtotime($value)) {
+            return false;
+        }
+
+        // Extract parameters
+        $limitMonths = $params;
+
         // Mendapatkan tanggal hari ini
         $tanggal_sekarang = date('Y-m-d');
 
         // Menambahkan 3 hari ke dalam tanggal hari ini
-        $tanggal_batas = date('Y-m-d', strtotime($tanggal_sekarang . ' +3 days'));
+        $tanggal_batas = date('Y-m-d', strtotime($tanggal_sekarang . ' +' . $limitMonths . 'days'));
 
         // Memeriksa apakah tanggal cuti kurang dari 3 hari dari hari ini
-        if ($value <= $tanggal_batas) {
+        if ($value < $tanggal_batas) {
             return false;
         }
 
