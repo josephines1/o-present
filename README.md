@@ -217,10 +217,10 @@ Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan 
     - Konfigurasikan tampilan auth website.
       ```
       public $views = [
-        'login'           => 'Auth\login',
+        'login'           => 'app\Views\auth\login',
         'register'        => 'Myth\Auth\Views\register',
-        'forgot'          => 'Auth\forgot',
-        'reset'           => 'Auth\reset-password',
+        'forgot'          => 'app\Views\auth\forgot',
+        'reset'           => 'app\Views\auth\reset-password',
         'emailForgot'     => 'Myth\Auth\Views\emails\forgot',
         'emailActivation' => 'Myth\Auth\Views\emails\activation',
       ];
@@ -316,10 +316,23 @@ Pada role Admin dan Pegawai, pengguna dapat mengajukan ketidakhadiran dengan bat
 #### Kelola Ketidakhadiran
 Pada role Head, pengguna dapat mengelola ijin ketidakhadiran, yang meliputi PENDING, APPROVED, dan REJECTED. Pengguna dapat mengunduh daftar ketidakhadiran dari seluruh pegawai ke dalam bentuk Microsoft Excel.
 
+Pada website, batas pengajuan ketidakhadiran dapat dilakukan minimal 3 hari sebelum tanggal mulai cuti untuk pengguna dengan role Head menentukan status pengajuan kehadiran. Untuk memodifikasi batas pengajuan, dapat dilakukan pada file `app\Controllers\Ketidakhadiran.php` pada validasi tanggal mulai (baris ke 287 dan 385) menjadi seperti ini:
+
+```
+'tanggal_mulai' => [
+                'rules' => 'required|valid_date[Y-m-d]|daysAfter[3]',
+                'errors' => [
+                    'required' => 'Tanggal mulai ketidakhadiran wajib diisi.',
+                    'valid_date' => 'Tanggal harus dalam format YYYY-MM-DD.',
+                    'daysAfter' => 'Pengajuan cuti harus minimal 3 hari sebelum tanggal cuti yang diinginkan.'
+                ]
+            ],
+```
+
 #### Master Data
 Pada role Head dan Admin, pengguna dapat mengelola data jabatan, lokasi presensi, dan pegawai. Pengguna dapat menemukan data-data tersebut dengan memanfaatkan fitur filter data dan live search data sehingga data dapat ditemukan dengan cepat dan efisien. Pengguna juga dapat mengunduh data-data tersebut ke dalam bentuk Microsoft Excel.
 
-Untuk data pegawai yang baru ditambahkan, pegawai dapat mengakses aplikasi setelah melakukan aktivasi melalui email, dengan password default '123456'.
+Untuk data beserta akun pegawai yang baru ditambahkan, pegawai dapat mengakses website setelah melewati proses aktivasi, dengan password default '123456'. Pengguna dengan role Head dan Admin dapat menambahkan akun baru untuk pegawai dan menentukan langsung status aktivasi nya (Aktivasi Instan, Aktivasi Melalui Email, atau Aktivasi Nanti).
 
 #### Kelola Profile
 Untuk semua role, pengguna dapat mengelola profile nya, yang meliputi ubah foto profile, ubah username, ubah nama dan info profile lainnya.

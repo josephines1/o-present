@@ -58,4 +58,9 @@ class myCustomValidation
         // Check if the input value falls within the calculated end date
         return strtotime($value) <= strtotime($endDate);
     }
+
+    public function valid_timezone($value): bool
+    {
+        return in_array($value, timezone_identifiers_list());
+    }
 }

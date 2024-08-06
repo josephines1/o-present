@@ -95,10 +95,9 @@ class Presensi extends BaseController
         $nama_foto = 'masuk-' . date('Y-m-d-H-i-s') . '-' . $username . '.png';
         $file_path = FCPATH . 'assets/img/foto_presensi/masuk/' . $nama_foto;
 
-        if (file_put_contents($file_path, $foto)) {
-            session()->setFlashdata('berhasil', 'Presensi masuk berhasil disimpan');
-        } else {
+        if (!file_put_contents($file_path, $foto)) {
             session()->setFlashdata('gagal', 'Gagal menyimpan foto presensi masuk');
+            return redirect()->to(base_url());
         }
 
         $id_pegawai = $this->request->getPost('id_pegawai');
@@ -184,6 +183,7 @@ class Presensi extends BaseController
 
         if (!file_put_contents($file_path, $foto)) {
             session()->setFlashdata('gagal', 'Gagal menyimpan foto presensi keluar');
+            return redirect()->to(base_url());
         }
 
         $id_presensi = $this->request->getPost('id_presensi');

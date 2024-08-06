@@ -78,12 +78,20 @@
                                 <?php endif; ?>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Zona Waktu</label>
-                                <select name="zona_waktu" type="text" class="form-select <?= validation_show_error('zona_waktu') ? 'is-invalid' : '' ?>" id="select-users">
+                                <label class="form-label d-flex align-items-center">
+                                    Zona Waktu
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-info-circle ms-2" data-bs-toggle="tooltip" data-bs-html="true" title="Jika kota tidak tersedia, pilih zona waktu yang sama." data-bs-placement="top">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                </label>
+                                <select name="zona_waktu" id="zona_waktu" type="text" class="form-select <?= validation_show_error('zona_waktu') ? 'is-invalid' : '' ?>" id="select-users">
                                     <option value="">---Pilih Zona Waktu---</option>
-                                    <option value="WIB" <?= old('zona_waktu', $lokasi['zona_waktu']) === 'WIB' ? 'selected' : '' ?>>WIB</option>
-                                    <option value="WITA" <?= old('zona_waktu', $lokasi['zona_waktu']) === 'WITA' ? 'selected' : '' ?>>WITA</option>
-                                    <option value="WIT" <?= old('zona_waktu', $lokasi['zona_waktu']) === 'WIT' ? 'selected' : '' ?>>WIT</option>
+                                    <?php foreach (timezone_identifiers_list() as $timezone) { ?>
+                                        <option value="<?= $timezone; ?>" <?= old('zona_waktu', $lokasi['zona_waktu']) === $timezone ? 'selected' : '' ?>><?= $timezone; ?></option>
+                                    <?php } ?>
                                 </select>
                                 <?php if (validation_show_error('zona_waktu')) : ?>
                                     <div class="invalid-feedback">
@@ -122,4 +130,13 @@
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#zona_waktu').select2({
+            placeholder: "---Pilih Zona Waktu---",
+            allowClear: false,
+            width: '100%',
+        });
+    });
+</script>
 <?= $this->endSection() ?>

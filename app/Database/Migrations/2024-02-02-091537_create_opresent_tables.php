@@ -31,7 +31,7 @@ class CreateOPresentTables extends Migration
             'latitude'          => ['type' => 'varchar', 'constraint' => 50],
             'longitude'         => ['type' => 'varchar', 'constraint' => 50],
             'radius'            => ['type' => 'int', 'constraint' => 11],
-            'zona_waktu'        => ['type' => 'varchar', 'constraint' => 4],
+            'zona_waktu'        => ['type' => 'varchar', 'constraint' => 100],
             'jam_masuk'         => ['type' => 'time'],
             'jam_pulang'        => ['type' => 'time'],
             'created_at'        => ['type' => 'datetime', 'null' => true],

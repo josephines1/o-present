@@ -163,47 +163,55 @@
 </div>
 
 <script>
-    window.setTimeout('waktuDashboard()', 1000);
-
     function waktuDashboard() {
-        const waktu = new Date();
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/waktu', true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const waktu = JSON.parse(xhr.responseText);
 
-        setTimeout('waktuDashboard()', 1000);
+                nama_bulan = [
+                    'Januari',
+                    'Februari',
+                    'Maret',
+                    'April',
+                    'Mei',
+                    'Juni',
+                    'Juli',
+                    'Agustus',
+                    'September',
+                    'Oktober',
+                    'November',
+                    'Desember'
+                ];
 
-        nama_bulan = [
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ];
+                nama_hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum\'at', 'Sabtu'];
 
-        nama_hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
+                hari = document.getElementById('hari');
+                tanggal = document.getElementById('tanggal');
+                bulan = document.getElementById('bulan');
+                tahun = document.getElementById('tahun');
+                jam = document.getElementById('jam');
+                menit = document.getElementById('menit');
+                detik = document.getElementById('detik');
 
-        hari = document.getElementById('hari');
-        tanggal = document.getElementById('tanggal');
-        bulan = document.getElementById('bulan');
-        tahun = document.getElementById('tahun');
-        jam = document.getElementById('jam');
-        menit = document.getElementById('menit');
-        detik = document.getElementById('detik');
-
-        if (tanggal && bulan && tahun && jam && menit && detik) {
-            hari.innerHTML = nama_hari[waktu.getDay()];
-            tanggal.innerHTML = waktu.getDate();
-            bulan.innerHTML = nama_bulan[waktu.getMonth()];
-            tahun.innerHTML = waktu.getFullYear();
-            jam.innerHTML = waktu.getHours();
-            menit.innerHTML = waktu.getMinutes();
-            detik.innerHTML = waktu.getSeconds();
-        }
+                if (tanggal && bulan && tahun && jam && menit && detik) {
+                    hari.innerHTML = nama_hari[new Date().getDay()]; // Menggunakan hari dari server jika diperlukan
+                    tanggal.innerHTML = waktu.tanggal;
+                    bulan.innerHTML = nama_bulan[new Date().getMonth()]; // Menggunakan bulan dari server jika diperlukan
+                    tahun.innerHTML = waktu.tahun;
+                    jam.innerHTML = waktu.jam;
+                    menit.innerHTML = waktu.menit;
+                    detik.innerHTML = waktu.detik;
+                }
+            }
+        };
+        xhr.send();
+        setTimeout(waktuDashboard, 1000);
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        waktuDashboard();
+    });
 </script>
 <?= $this->endSection() ?>

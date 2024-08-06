@@ -274,10 +274,10 @@ class LokasiPresensi extends BaseController
                 ]
             ],
             'zona_waktu' => [
-                'rules' => 'required|in_list[WIB,WITA,WIT]',
+                'rules' => 'required|valid_timezone',
                 'errors' => [
                     'required' => 'mohon pilih zona waktu',
-                    'in_list' => 'mohon pilih zona waktu yang tersedia',
+                    'valid_timezone' => 'mohon pilih zona waktu yang tersedia',
                 ]
             ],
             'jam_masuk' => [
@@ -397,10 +397,10 @@ class LokasiPresensi extends BaseController
                 ]
             ],
             'zona_waktu' => [
-                'rules' => 'required|in_list[WIB,WITA,WIT]',
+                'rules' => 'required|valid_timezone',
                 'errors' => [
                     'required' => 'mohon pilih zona waktu',
-                    'in_list' => 'mohon pilih zona waktu yang tersedia',
+                    'valid_timezone' => 'mohon pilih zona waktu yang tersedia',
                 ]
             ],
             'jam_masuk' => [
@@ -420,7 +420,7 @@ class LokasiPresensi extends BaseController
         ];
 
         if (!$this->validate($rules)) {
-            return redirect()->to('/lokasi-presensi/' . $slug)->withInput();
+            return redirect()->to('/lokasi-presensi/edit/' . $slug)->withInput();
         }
 
         $newLokasi = $this->request->getVar('nama_lokasi');

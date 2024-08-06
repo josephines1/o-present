@@ -52,6 +52,9 @@
 
     <!-- jQuery -->
     <script src="<?= base_url('js/code.jquery.com_jquery-3.7.0.min.js') ?>"></script>
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -125,6 +128,9 @@
             });
         </script>
     <?php endif; ?>
+
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 
 </html>

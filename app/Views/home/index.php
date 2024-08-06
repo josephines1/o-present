@@ -1,18 +1,6 @@
 <?= $this->extend('templates/index') ?>
 
 <?= $this->section('pageBody') ?>
-<?php
-
-// Zona Waktu
-if ($user_lokasi_presensi->zona_waktu === 'WIB') {
-    date_default_timezone_set('Asia/Jakarta');
-} else if ($user_lokasi_presensi->zona_waktu === 'WITA') {
-    date_default_timezone_set('Asia/Makassar');
-} else if ($user_lokasi_presensi->zona_waktu === 'WIT') {
-    date_default_timezone_set('Asia/Jayapura');
-}
-
-?>
 <style>
     .parent_date {
         display: grid;
@@ -185,82 +173,66 @@ if ($user_lokasi_presensi->zona_waktu === 'WIB') {
 </div>
 
 <script>
-    window.setTimeout('waktuMasuk()', 1000);
-    window.setTimeout('waktuKeluar()', 1000);
-
     function waktuMasuk() {
-        const waktu = new Date();
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/waktu', true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const waktu = JSON.parse(xhr.responseText);
 
-        setTimeout('waktuMasuk()', 1000);
+                tanggal_masuk = document.getElementById('tanggal_masuk');
+                bulan_masuk = document.getElementById('bulan_masuk');
+                tahun_masuk = document.getElementById('tahun_masuk');
+                jam_masuk = document.getElementById('jam_masuk');
+                menit_masuk = document.getElementById('menit_masuk');
+                detik_masuk = document.getElementById('detik_masuk');
 
-        nama_bulan = [
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ];
-
-        tanggal_masuk = document.getElementById('tanggal_masuk');
-        bulan_masuk = document.getElementById('bulan_masuk');
-        tahun_masuk = document.getElementById('tahun_masuk');
-        jam_masuk = document.getElementById('jam_masuk');
-        menit_masuk = document.getElementById('menit_masuk');
-        detik_masuk = document.getElementById('detik_masuk');
-
-        if (tanggal_masuk && bulan_masuk && tahun_masuk && jam_masuk && menit_masuk && detik_masuk) {
-            tanggal_masuk.innerHTML = waktu.getDate();
-            bulan_masuk.innerHTML = nama_bulan[waktu.getMonth()];
-            tahun_masuk.innerHTML = waktu.getFullYear();
-            jam_masuk.innerHTML = waktu.getHours();
-            menit_masuk.innerHTML = waktu.getMinutes();
-            detik_masuk.innerHTML = waktu.getSeconds();
-        }
+                if (tanggal_masuk && bulan_masuk && tahun_masuk && jam_masuk && menit_masuk && detik_masuk) {
+                    tanggal_masuk.innerHTML = waktu.tanggal;
+                    bulan_masuk.innerHTML = waktu.bulan;
+                    tahun_masuk.innerHTML = waktu.tahun;
+                    jam_masuk.innerHTML = waktu.jam;
+                    menit_masuk.innerHTML = waktu.menit;
+                    detik_masuk.innerHTML = waktu.detik;
+                }
+            }
+        };
+        xhr.send();
+        setTimeout(waktuMasuk, 1000);
     }
 
     function waktuKeluar() {
-        const waktu = new Date();
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/waktu', true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const waktu = JSON.parse(xhr.responseText);
 
-        setTimeout('waktuKeluar()', 1000);
+                tanggal_keluar = document.getElementById('tanggal_keluar');
+                bulan_keluar = document.getElementById('bulan_keluar');
+                tahun_keluar = document.getElementById('tahun_keluar');
+                jam_keluar = document.getElementById('jam_keluar');
+                menit_keluar = document.getElementById('menit_keluar');
+                detik_keluar = document.getElementById('detik_keluar');
 
-        nama_bulan = [
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ];
-
-        tanggal_keluar = document.getElementById('tanggal_keluar');
-        bulan_keluar = document.getElementById('bulan_keluar');
-        tahun_keluar = document.getElementById('tahun_keluar');
-        jam_keluar = document.getElementById('jam_keluar');
-        menit_keluar = document.getElementById('menit_keluar');
-        detik_keluar = document.getElementById('detik_keluar');
-
-        if (tanggal_keluar && bulan_keluar && tahun_keluar && jam_keluar && menit_keluar && detik_keluar) {
-            tanggal_keluar.innerHTML = waktu.getDate();
-            bulan_keluar.innerHTML = nama_bulan[waktu.getMonth()];
-            tahun_keluar.innerHTML = waktu.getFullYear();
-            jam_keluar.innerHTML = waktu.getHours();
-            menit_keluar.innerHTML = waktu.getMinutes();
-            detik_keluar.innerHTML = waktu.getSeconds();
-        }
+                if (tanggal_keluar && bulan_keluar && tahun_keluar && jam_keluar && menit_keluar && detik_keluar) {
+                    tanggal_keluar.innerHTML = waktu.tanggal;
+                    bulan_keluar.innerHTML = waktu.bulan;
+                    tahun_keluar.innerHTML = waktu.tahun;
+                    jam_keluar.innerHTML = waktu.jam;
+                    menit_keluar.innerHTML = waktu.menit;
+                    detik_keluar.innerHTML = waktu.detik;
+                }
+            }
+        };
+        xhr.send();
+        setTimeout(waktuKeluar, 1000);
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        waktuMasuk();
+        waktuKeluar();
+    });
 
     getLocation();
 
@@ -272,6 +244,7 @@ if ($user_lokasi_presensi->zona_waktu === 'WIB') {
                 }, {
                     timeout: 30000,
                     maximumAge: 0,
+                    enableHighAccuracy: true,
                 }
             );
         } else {
