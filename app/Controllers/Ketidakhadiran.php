@@ -412,6 +412,13 @@ class Ketidakhadiran extends BaseController
             return redirect()->to('/ketidakhadiran/edit/' . $id)->withInput();
         }
 
+        $input_tanggal_mulai = $this->request->getPost('tanggal_mulai');
+        $input_tanggal_selesai = $this->request->getPost('tanggal_selesai');
+        if ($input_tanggal_mulai > $input_tanggal_selesai) {
+            $this->validator->setError("tanggal_mulai", "Tanggal mulai harus lebih awal dari tanggal selesai.");
+            return redirect()->to(base_url('/pengajuan-ketidakhadiran'))->withInput();
+        }
+
         $file = $this->request->getFile('file');
 
         if ($file->getError() == 4) {

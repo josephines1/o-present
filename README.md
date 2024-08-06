@@ -11,7 +11,7 @@ Presensi online tanpa ribet! Catat kehadiran dengan cepat menggunakan foto dan G
 - [CodeIgniter 4](https://codeigniter.com/user_guide/intro/index.html)
 - [Composer](https://getcomposer.org/)
 - [XAMPP 8.2.4 or later](https://www.apachefriends.org/download.html)
-- Geolocation-enabled Browser
+- Geolocation-enabled Browser. Read the location access conditions [here](https://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features/).
 
 ## Features
 
