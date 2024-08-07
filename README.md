@@ -23,9 +23,6 @@ Temukan fitur-fitur lengkap pada aplikasi presensi O-Present:
 - Simpan Data Presensi, Lokasi Presensi, hingga Data Pegawai
 - Sistem Otentikasi (Auth) Multiuser untuk Pegawai, Admin, dan Head
 
-> [!NOTE]
-> (Update: 30 Juli 2024) Fitur Baru! Pengguna dengan role Admin dan Head kini dapat menambahkan akun baru untuk pegawai dan langsung menentukan status aktif akun mereka.
-
 ## Getting Started
 
 Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan web O-Present:
@@ -251,7 +248,7 @@ Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan 
     - Migrate
       ```console
       php spark migrate -2024-02-02-091537_create_opresent_tables
-      php spark migrate -2024-02-02-142048_create_auth_tables.php
+      php spark migrate -2024-02-02-142048_create_auth_tables
       ```
 
     - Seed
