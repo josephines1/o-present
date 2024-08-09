@@ -165,7 +165,7 @@
 <script>
     function waktuDashboard() {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/waktu', true);
+        xhr.open('POST', '/waktu', true);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const waktu = JSON.parse(xhr.responseText);

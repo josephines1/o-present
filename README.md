@@ -310,10 +310,23 @@ Pada role Head dan Admin, pengguna dapat melihat laporan presensi harian dan bul
 #### Pengajuan Ketidakhadiran
 Pada role Admin dan Pegawai, pengguna dapat mengajukan ketidakhadiran dengan batas H-3 dan durasi ketidakhadiran selama 3 bulan. Pengguna diwajibkan menggunggah file surat keterangan tidak hadir dalam bentuk PDF. File yang sudah terunggah disimpan dalam folder public\assets\file\surat_keterangan_ketidakhadiran. Pengguna dapat mengunduh daftar ketidakhadirannya dalam satu bulan ke dalam bentuk Microsoft Excel.
 
+Detail tipe ketidakhadiran adalah sebagai berikut
+**Cuti**
+- Pengajuan: Dapat diajukan beberapa hari sebelumnya sesuai kebijakan perusahaan, yang diatur di rules `daysAfter[]` di file `app\Controllers\Ketidakhadiran.php`.
+- Status Approval: Memerlukan persetujuan dari atasan. Tidak ada persetujuan otomatis.
+
+**Izin**
+- Pengajuan: Dapat diajukan pada hari yang sama atau untuk hari mendatang, tetapi tidak dapat untuk tanggal kemarin atau sebelumnya.
+- Status Approval: Memerlukan persetujuan dari atasan. Tidak ada persetujuan otomatis.
+
+**Sakit**
+- Pengajuan: Hanya dapat diajukan pada hari ini atau hari esok. Tidak bisa untuk tanggal lebih dari hari esok.
+- Status Approval: Otomatis disetujui tanpa perlu persetujuan dari atasan.
+
 #### Kelola Ketidakhadiran
 Pada role Head, pengguna dapat mengelola ijin ketidakhadiran, yang meliputi PENDING, APPROVED, dan REJECTED. Pengguna dapat mengunduh daftar ketidakhadiran dari seluruh pegawai ke dalam bentuk Microsoft Excel.
 
-Pada website, batas pengajuan ketidakhadiran dapat dilakukan minimal 3 hari sebelum tanggal mulai cuti untuk pengguna dengan role Head menentukan status pengajuan kehadiran. Untuk memodifikasi batas pengajuan, dapat dilakukan pada file `app\Controllers\Ketidakhadiran.php` pada validasi tanggal mulai (baris ke 287 dan 385) menjadi seperti ini:
+Pada website, batas pengajuan ketidakhadiran dapat dilakukan minimal 3 hari sebelum tanggal mulai cuti untuk pengguna dengan role Head menentukan status pengajuan kehadiran. Untuk memodifikasi batas pengajuan, dapat dilakukan pada rules `daysAfter[]` di file `app\Controllers\Ketidakhadiran.php` pada validasi tanggal mulai (baris ke 287 dan 385) menjadi seperti ini:
 
 ```
 'tanggal_mulai' => [

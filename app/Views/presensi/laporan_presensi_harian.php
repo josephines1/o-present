@@ -59,7 +59,9 @@
                                     <th>Nama Pegawai</th>
                                     <th>Tanggal</th>
                                     <th>Jam Masuk</th>
+                                    <th>Foto Masuk</th>
                                     <th>Jam Pulang</th>
+                                    <th>Foto Pulang</th>
                                     <th>Total Jam Kerja</th>
                                     <th>Total Keterlambatan</th>
                                 </tr>
@@ -106,7 +108,13 @@
                                             <td><?= $data->nama ?></td>
                                             <td class="text-center"><?= date('d F Y', strtotime($data->tanggal_masuk)) ?></td>
                                             <td class="text-center"><?= $data->jam_masuk ?></td>
+                                            <td class="text-center"><a href="<?= base_url('assets/img/foto_presensi/masuk/' . $data->foto_masuk) ?>" target="_blank">Lihat Foto</a></td>
                                             <td class="text-center"><?= $data->jam_keluar ?></td>
+                                            <?php if ($data->jam_keluar === '00:00:00' || $data->foto_keluar === '-') : ?>
+                                                <td class="text-center">-</td>
+                                            <?php else : ?>
+                                                <td class="text-center"><a href="<?= base_url('assets/img/foto_presensi/keluar/' . $data->foto_keluar) ?>" target="_blank">Lihat Foto</a></td>
+                                            <?php endif; ?>
                                             <?php if ($data->tanggal_keluar === '0000-00-00') : ?>
                                                 <td class="text-center">0 Jam 0 Menit</td>
                                             <?php else : ?>
@@ -121,7 +129,7 @@
                                     <?php endforeach; ?>
                                 <?php else : ?>
                                     <tr class="text-center">
-                                        <td colspan="8">Belum ada data presensi.</td>
+                                        <td colspan="10">Belum ada data presensi.</td>
                                     </tr>
                                 <?php endif; ?>
                             </table>

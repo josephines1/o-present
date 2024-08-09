@@ -5,6 +5,7 @@ namespace App\Controllers;
 use DateTime;
 use App\Models\UsersModel;
 use App\Models\KetidakhadiranModel;
+use App\Models\PresensiModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -12,11 +13,13 @@ class Ketidakhadiran extends BaseController
 {
     protected $usersModel;
     protected $ketidakhadiranModel;
+    protected $presensiModel;
 
     public function __construct()
     {
         $this->usersModel = new UsersModel();
         $this->ketidakhadiranModel = new KetidakhadiranModel();
+        $this->presensiModel = new PresensiModel();
     }
 
     public function index(): string
@@ -288,7 +291,6 @@ class Ketidakhadiran extends BaseController
                 'errors' => [
                     'required' => 'Tanggal mulai ketidakhadiran wajib diisi.',
                     'valid_date' => 'Tanggal harus dalam format YYYY-MM-DD.',
-                    'daysAfter' => 'Pengajuan harus minimal 3 hari sebelum tanggal yang diinginkan.',
                 ]
             ],
             'tanggal_berakhir' => [
@@ -313,16 +315,31 @@ class Ketidakhadiran extends BaseController
             return redirect()->to('/pengajuan-ketidakhadiran')->withInput();
         }
 
-        $input_tanggal_mulai = $this->request->getPost('tanggal_mulai');
-        $input_tanggal_selesai = $this->request->getPost('tanggal_selesai');
-        if ($input_tanggal_mulai > $input_tanggal_selesai) {
-            $this->validator->setError("tanggal_mulai", "Tanggal mulai harus lebih awal dari tanggal selesai.");
-            return redirect()->to(base_url('/pengajuan-ketidakhadiran'))->withInput();
+        // Validasi lebih lanjut
+        // Apakah pada tanggal mulai / berakhir pengguna sudah ada
+        // Pengajuan Ketidakhadiran yang di-approve
+        $tanggal_mulai = $this->request->getPost('tanggal_mulai');
+        $tanggal_berakhir = $this->request->getPost('tanggal_berakhir');
+        $isSubmit = $this->ketidakhadiranModel->getDataIzinHariIni(user_id(), $tanggal_mulai, $tanggal_berakhir);
+
+        if ($isSubmit > 0) {
+            $this->validator->setError("tanggal_mulai", "Ketidakhadiran Anda sudah dalam status Approved pada tanggal ini");
+            $this->validator->setError("tanggal_berakhir", "Ketidakhadiran Anda sudah dalam status Approved pada tanggal ini");
+            return redirect()->to('/pengajuan-ketidakhadiran')->withInput();
         }
 
         $file = $this->request->getFile('file');
         $nama_file = 'SuratKeterangan-' . user()->username . '-' . date('Y-m-d-His') . '.pdf';
         $file->move(FCPATH . 'assets/file/surat_keterangan_ketidakhadiran/', $nama_file);
+
+        // Menentukan status pengajuan
+        // Jika tipe ketidakhadiran adalah sakit, maka langsung APPROVED
+        $tipe_ketidakhadiran = $this->request->getPost('tipe_ketidakhadiran');
+        if ($tipe_ketidakhadiran == "SAKIT") {
+            $status_pengajuan = "APPROVED";
+        } else {
+            $status_pengajuan = "PENDING";
+        }
 
         $this->ketidakhadiranModel->save([
             'id_pegawai' => $this->request->getVar('id_pegawai'),
@@ -331,8 +348,27 @@ class Ketidakhadiran extends BaseController
             'tanggal_berakhir' => $this->request->getVar('tanggal_berakhir'),
             'deskripsi' => $this->request->getVar('deskripsi'),
             'file' => $nama_file,
-            'status_pengajuan' => 'PENDING',
+            'status_pengajuan' => $status_pengajuan,
         ]);
+
+        // Jika sudah melakukan presensi masuk lalu mengajukan izin sakit
+        // otomatis akan tercatat presensi keluar
+        if ($tipe_ketidakhadiran == "SAKIT") {
+            // Ambil data presensi pegawai yang bersangkutan
+            $presensi_db = $this->presensiModel->cekPresensiMasuk(user_id(), date('Y-m-d'));
+
+            // Cek apakah sudah ada melakukan presensi masuk di hari pengajuan
+            // Namun belum melakukan presensi keluar
+            // Jika ada, catat presensi keluar
+            if ($presensi_db != null) {
+                $this->presensiModel->save([
+                    'id' => $presensi_db->id,
+                    'tanggal_keluar' => date('Y-m-d'),
+                    'jam_keluar' => date('H:i:s'),
+                    'foto_keluar' => "-",
+                ]);
+            }
+        }
 
         session()->setFlashdata('berhasil', 'Pengajuan Ketidakhadiran berhasil dikirim');
         return redirect()->to(base_url('/ketidakhadiran'));
@@ -386,7 +422,6 @@ class Ketidakhadiran extends BaseController
                 'errors' => [
                     'required' => 'Tanggal mulai ketidakhadiran wajib diisi.',
                     'valid_date' => 'Tanggal harus dalam format YYYY-MM-DD.',
-                    'daysAfter' => 'Pengajuan cuti harus minimal 3 hari sebelum tanggal cuti yang diinginkan.'
                 ]
             ],
             'tanggal_berakhir' => [
@@ -412,11 +447,17 @@ class Ketidakhadiran extends BaseController
             return redirect()->to('/ketidakhadiran/edit/' . $id)->withInput();
         }
 
-        $input_tanggal_mulai = $this->request->getPost('tanggal_mulai');
-        $input_tanggal_selesai = $this->request->getPost('tanggal_selesai');
-        if ($input_tanggal_mulai > $input_tanggal_selesai) {
-            $this->validator->setError("tanggal_mulai", "Tanggal mulai harus lebih awal dari tanggal selesai.");
-            return redirect()->to(base_url('/pengajuan-ketidakhadiran'))->withInput();
+        // Validasi lebih lanjut
+        // Apakah pada tanggal mulai / berakhir pengguna sudah ada
+        // Pengajuan Ketidakhadiran yang di-approve
+        $tanggal_mulai = $this->request->getPost('tanggal_mulai');
+        $tanggal_berakhir = $this->request->getPost('tanggal_berakhir');
+        $isSubmit = $this->ketidakhadiranModel->getDataIzinHariIni(user_id(), $tanggal_mulai, $tanggal_berakhir);
+
+        if ($isSubmit > 0) {
+            $this->validator->setError("tanggal_mulai", "Ketidakhadiran Anda sudah dalam status Approved pada tanggal ini");
+            $this->validator->setError("tanggal_berakhir", "Ketidakhadiran Anda sudah dalam status Approved pada tanggal ini");
+            return redirect()->to('/pengajuan-ketidakhadiran')->withInput();
         }
 
         $file = $this->request->getFile('file');
@@ -430,6 +471,15 @@ class Ketidakhadiran extends BaseController
             unlink('assets/file/surat_keterangan_ketidakhadiran/' . $this->request->getVar('file_old'));
         }
 
+        // Menentukan status pengajuan
+        // Jika tipe ketidakhadiran adalah sakit, maka langsung APPROVED
+        $tipe_ketidakhadiran = $this->request->getPost('tipe_ketidakhadiran');
+        if ($tipe_ketidakhadiran == "SAKIT") {
+            $status_pengajuan = "APPROVED";
+        } else {
+            $status_pengajuan = "PENDING";
+        }
+
         $this->ketidakhadiranModel->save([
             'id' => $this->request->getVar('id'),
             'id_pegawai' => $this->request->getVar('id_pegawai'),
@@ -438,7 +488,27 @@ class Ketidakhadiran extends BaseController
             'tanggal_berakhir' => $this->request->getVar('tanggal_berakhir'),
             'deskripsi' => $this->request->getVar('deskripsi'),
             'file' => $nama_file,
+            'status_pengajuan' => $status_pengajuan,
         ]);
+
+        // Jika sudah melakukan presensi masuk lalu mengajukan izin sakit
+        // otomatis akan tercatat presensi keluar
+        if ($tipe_ketidakhadiran == "SAKIT") {
+            // Ambil data presensi pegawai yang bersangkutan
+            $presensi_db = $this->presensiModel->cekPresensiMasuk(user_id(), date('Y-m-d'));
+
+            // Cek apakah sudah ada melakukan presensi masuk di hari pengajuan
+            // Namun belum melakukan presensi keluar
+            // Jika ada, catat presensi keluar
+            if ($presensi_db != null) {
+                $this->presensiModel->save([
+                    'id' => $presensi_db->id,
+                    'tanggal_keluar' => date('Y-m-d'),
+                    'jam_keluar' => date('H:i:s'),
+                    'foto_keluar' => "-",
+                ]);
+            }
+        }
 
         session()->setFlashdata('berhasil', 'Pengajuan Ketidakhadiran berhasil diedit');
         return redirect()->to(base_url('/ketidakhadiran'));

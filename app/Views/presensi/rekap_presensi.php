@@ -103,7 +103,7 @@
                                             <td class="text-center"><?= $data_presensi->jam_masuk ?></td>
                                             <td class="text-center"><a href="<?= base_url('assets/img/foto_presensi/masuk/' . $data_presensi->foto_masuk) ?>" target="_blank">Lihat Foto</a></td>
                                             <td class="text-center"><?= $data_presensi->jam_keluar ?></td>
-                                            <?php if ($data_presensi->jam_keluar === '00:00:00') : ?>
+                                            <?php if ($data_presensi->jam_keluar === '00:00:00' || $data_presensi->foto_keluar === '-') : ?>
                                                 <td class="text-center">-</td>
                                             <?php else : ?>
                                                 <td class="text-center"><a href="<?= base_url('assets/img/foto_presensi/keluar/' . $data_presensi->foto_keluar) ?>" target="_blank">Lihat Foto</a></td>

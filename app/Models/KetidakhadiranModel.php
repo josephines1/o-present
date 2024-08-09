@@ -121,7 +121,7 @@ class KetidakhadiranModel extends Model
         return $query->getRow();
     }
 
-    public function getDataIzinHariIni($id_pegawai = false)
+    public function getDataIzinHariIni($id_pegawai = false, $startDate = false, $endDate = false)
     {
         $this->builder->select('ketidakhadiran.*');
 
@@ -129,10 +129,17 @@ class KetidakhadiranModel extends Model
             $this->builder->where('id_pegawai', $id_pegawai);
         }
 
-        $query = $this->builder->where('tanggal_mulai <=', date('Y-m-d'))
-            ->where('tanggal_berakhir >=', date('Y-m-d'))
-            ->where('status_pengajuan', 'APPROVED')
-            ->get();
+        if ($startDate && $endDate) {
+            $query = $this->builder->where('tanggal_mulai <=', $startDate)
+                ->where('tanggal_berakhir >=', $endDate)
+                ->where('status_pengajuan', 'APPROVED')
+                ->get();
+        } else {
+            $query = $this->builder->where('tanggal_mulai <=', date('Y-m-d'))
+                ->where('tanggal_berakhir >=', date('Y-m-d'))
+                ->where('status_pengajuan', 'APPROVED')
+                ->get();
+        }
 
         return $query->getNumRows();
     }

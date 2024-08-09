@@ -2,12 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Models\UsersModel;
 use CodeIgniter\Controller;
+use Psr\Log\LoggerInterface;
 use CodeIgniter\HTTP\CLIRequest;
+use App\Models\LokasiPresensiModel;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class BaseController
@@ -43,6 +45,9 @@ abstract class BaseController extends Controller
      */
     // protected $session;
 
+    protected $usersModel;
+    protected $lokasiModel;
+
     /**
      * @return void
      */
@@ -54,5 +59,18 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
+
+        $this->usersModel = new UsersModel();
+        $this->lokasiModel = new LokasiPresensiModel();
+
+        $user_profile = $this->usersModel->getUserInfo(user_id());
+        $user_lokasi = $this->lokasiModel->getWhere(['nama_lokasi' => $user_profile->lokasi_presensi])->getFirstRow();
+
+        // Zona Waktu
+        if (in_array($user_lokasi->zona_waktu, timezone_identifiers_list())) {
+            date_default_timezone_set($user_lokasi->zona_waktu);
+        } else {
+            date_default_timezone_set('Asia/Jakarta');
+        }
     }
 }

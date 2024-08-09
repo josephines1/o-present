@@ -90,7 +90,7 @@
                         <h3 class="mb-0">Presensi Keluar</h3>
                     </div>
                     <div class="card-body">
-                        <?php if ($status_ketidakhadiran === 1) : ?>
+                        <?php if ($status_ketidakhadiran != 0) : ?>
                             <div class="text-warning text-xxl-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-exclamation-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="height: 96px; width: 96px;">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -175,7 +175,7 @@
 <script>
     function waktuMasuk() {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/waktu', true);
+        xhr.open('POST', '/waktu', true);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const waktu = JSON.parse(xhr.responseText);
@@ -203,7 +203,7 @@
 
     function waktuKeluar() {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/waktu', true);
+        xhr.open('POST', '/waktu', true);
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const waktu = JSON.parse(xhr.responseText);
