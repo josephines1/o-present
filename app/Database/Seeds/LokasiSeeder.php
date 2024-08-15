@@ -17,7 +17,7 @@ class LokasiSeeder extends Seeder
                 'latitude'          => '-6.195590234157995',
                 'longitude'         => '106.81301455947505',
                 'radius'            => 500,
-                'zona_waktu'        => 'WIB',
+                'zona_waktu'        => 'Asia/Jakarta',
                 'jam_masuk'         => '08:00:00',
                 'jam_pulang'        => '18:00:00',
             ],

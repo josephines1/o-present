@@ -214,10 +214,10 @@ Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan 
     - Konfigurasikan tampilan auth website.
       ```
       public $views = [
-        'login'           => 'app\Views\auth\login',
+        'login'           => 'App\Views\auth\login',
         'register'        => 'Myth\Auth\Views\register',
-        'forgot'          => 'app\Views\auth\forgot',
-        'reset'           => 'app\Views\auth\reset-password',
+        'forgot'          => 'App\Views\auth\forgot',
+        'reset'           => 'App\Views\auth\reset-password',
         'emailForgot'     => 'Myth\Auth\Views\emails\forgot',
         'emailActivation' => 'Myth\Auth\Views\emails\activation',
       ];
