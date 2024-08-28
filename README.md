@@ -222,6 +222,11 @@ Anda perlu melakukan sedikit konfigurasi di bawah ini sebelum mulai menjalankan 
         'emailActivation' => 'Myth\Auth\Views\emails\activation',
       ];
       ```
+    
+    - Konfigurasikan agar tidak tampil halaman register mandiri
+      ```
+      public $allowRegistration = null;
+      ```
       
 11. Buka file `Email.php` dalam folder `app/Config/Email.php`.
     
