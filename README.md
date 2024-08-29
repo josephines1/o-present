@@ -375,33 +375,23 @@ Teknologi dalam aplikasi ini:
 ## Tips & Troubleshooting
 Jika Anda mendapat pesan error saat menjalankan source code O-Present, silahkan melihat solusi-solusi di bawah ini.
 
-### Mengatasi Error "Only secure origins are allowed"
+1. **Mengatasi Error "Only secure origins are allowed"**
+   Jika Anda ingin mencoba mengakses web O-Present di device yang berbeda dengan device server menggunakan IP Address dan Port, kemungkinan akan mengalami error ini karena masalah izin akses lokasi menggunakan HTTP. Anda bisa menggunakan ngrok untuk membuat tunneling ke HTTPS.
 
-Jika Anda ingin mencoba mengakses web O-Present di device yang berbeda dengan device server menggunakan IP Address dan Port, kemungkinan akan mengalami error ini karena masalah izin akses lokasi menggunakan HTTP. Anda bisa menggunakan ngrok untuk membuat tunneling ke HTTPS.
+   **Solusi:** Jalankan `ngrok http [port]` untuk mengakses aplikasi Anda melalui HTTPS.
 
-**Solusi:** Jalankan `ngrok http [port]` untuk mengakses aplikasi Anda melalui HTTPS.
+   Solusi dari @ikii378.
 
-Solusi dari @ikii378.
+2. **Mengatasi Error "Origin Does Not Have Permission to use Geolocation Service" pada iOS**
+   Pengguna iOS mungkin mengalami bug di mana mereka tidak bisa menggunakan layanan geolocation dan menerima pesan error "Origin Does Not Have Permission to use Geolocation Service" saat mencoba melakukan absen.
 
-**Solusi:** Untuk mengatasi masalah ini, tambahkan header berikut pada konfigurasi web server NGINX:
+   **Solusi:** Untuk mengatasi masalah ini, tambahkan header berikut pada konfigurasi web server NGINX:
 
-```nginx
-add_header Content-Security-Policy "upgrade-insecure-requests";
-```
+   ```nginx
+   add_header Content-Security-Policy "upgrade-insecure-requests";
+   ```
 
-Solusi dari @mrandrian ([GitHub Profile](https://github.com/mrandrian)).
-
-### Mengatasi Error "Origin Does Not Have Permission to use Geolocation Service" pada iOS
-
-Pengguna iOS mungkin mengalami bug di mana mereka tidak bisa menggunakan layanan geolocation dan menerima pesan error "Origin Does Not Have Permission to use Geolocation Service" saat mencoba melakukan absen.
-
-**Solusi:** Untuk mengatasi masalah ini, tambahkan header berikut pada konfigurasi web server NGINX:
-
-```nginx
-add_header Content-Security-Policy "upgrade-insecure-requests";
-```
-
-Solusi dari @mrandrian ([GitHub Profile](https://github.com/mrandrian)).
+   Solusi dari @mrandrian ([GitHub Profile](https://github.com/mrandrian)).
 
 ## Contribution
 
