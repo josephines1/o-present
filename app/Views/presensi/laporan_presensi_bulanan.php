@@ -140,7 +140,7 @@
                                     <?php endforeach; ?>
                                 <?php else : ?>
                                     <tr class="text-center">
-                                        <td colspan="8">Belum ada data presensi.</td>
+                                        <td colspan="10">Belum ada data presensi.</td>
                                     </tr>
                                 <?php endif; ?>
                             </table>

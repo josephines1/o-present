@@ -196,9 +196,9 @@
                 detik = document.getElementById('detik');
 
                 if (tanggal && bulan && tahun && jam && menit && detik) {
-                    hari.innerHTML = nama_hari[new Date().getDay()]; // Menggunakan hari dari server jika diperlukan
+                    hari.innerHTML = nama_hari[new Date().getDay()];
                     tanggal.innerHTML = waktu.tanggal;
-                    bulan.innerHTML = nama_bulan[new Date().getMonth()]; // Menggunakan bulan dari server jika diperlukan
+                    bulan.innerHTML = waktu.bulan;
                     tahun.innerHTML = waktu.tahun;
                     jam.innerHTML = waktu.jam;
                     menit.innerHTML = waktu.menit;
