@@ -11,6 +11,7 @@ class KetidakhadiranModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = ['id_pegawai', 'tipe_ketidakhadiran', 'tanggal_mulai', 'tanggal_berakhir', 'deskripsi', 'file', 'status_pengajuan'];
     protected $useTimestamps = true;
+    protected $tempReturnType = 'array';
 
     public function __construct()
     {

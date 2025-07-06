@@ -126,3 +126,4 @@ nb-configuration.xml
 /phpunit*.xml
 /.phpunit.*.cache
 
+/public/assets/file/surat_keterangan_ketidakhadiran
