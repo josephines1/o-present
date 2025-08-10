@@ -127,3 +127,7 @@ nb-configuration.xml
 /.phpunit.*.cache
 
 /public/assets/file/surat_keterangan_ketidakhadiran
+/public/assets/img/foto_presensi/masuk/*
+!/public/assets/img/foto_presensi/masuk/.gitkeep
+/public/assets/img/foto_presensi/keluar/*
+!/public/assets/img/foto_presensi/keluar/.gitkeep

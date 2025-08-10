@@ -8,6 +8,9 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->get('/', 'Home::index', ['filter' => 'role:admin,pegawai']);
 $routes->post('/waktu', 'Home::getWaktu');
+$routes->get('/waktu', function () {
+    return redirect()->to('/');
+});
 $routes->get('/admin', 'Admin::index', ['filter' => 'role:admin,head']);
 
 $routes->get('/jabatan', 'Jabatan::index', ['filter' => 'role:admin,head']);
